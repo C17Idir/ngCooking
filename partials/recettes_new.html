@@ -1,0 +1,101 @@
+<div class="content" id="content_recettes_new" ng-app="RecipeNewApp" ng-controller="RecipeNewCtrl as recipeNewCtrl">
+
+	<h1 class="page-title">Nouvelle recette</h1>
+
+	<section class="section">
+		<form action="#">
+			<div class="row">
+				<div class="col-xs-6">
+					<p class="line">
+						<label for="">Le nom de votre recette</label>
+						<input ng-model="recipeNewCtrl.recipe.name" ng-change="recipeNewCtrl.isRecipeReallyNew()" type="text" class="mb0 wide" required>
+						<label for="" class="error" ng-hide="recipeNewCtrl.isNew">Ce nom est déjà recensé</label>
+					</p>
+					<p class="line">
+						<label for="">Catégorie</label>
+						<select name="" id="" class="mb0 wide"  ng-options="item.nameToDisplay for item in recipeNewCtrl.recipesCategoriesListe track by item.id" ng-model="recipeNewCtrl.recipe.category">
+
+						</select>
+					</p>
+					<p class="line">
+						<label for="">Préparation de votre recette</label>
+						<textarea id="recette_desc" class="resizable mb0 wide" ng-maxlength="300" required></textarea>
+					</p>
+				</div>
+				<div class="col-xs-6">
+					<p class="line">
+						<label for="">Photo de la recette</label>
+						<input type="file" class="mb0" ng-model="recipeNewCtrl.recipe.picture">
+						<label for="">{{recipeNewCtrl.recipe.picture}}</label>
+					</p>
+					<p class="line ac">
+						<img class="current_img" ng-src="{{recipeNewCtrl.recipe.picture}}" alt="Visuel recette">
+					</p>
+				</div>
+				<div class="col-xs-12">
+					<div class="hr mt2 mb2"></div>
+				</div>
+				<div class="col-xs-12">
+					<p class="line ac">
+						<label for="">Sélectionnez tous les ingrédients de votre recette</label>
+					</p>
+					<p class="ac">
+
+						<label for="">{{recipeNewCtrl.selectedCategoryForIngredient.id}}</label>
+						<select name="" id="" ng-options="item.nameToDisplay for item in recipeNewCtrl.ingredientsCategoriesListe track by item.id" ng-model="recipeNewCtrl.selectedCategoryForIngredient" ng-change="recipeNewCtrl.setIngredients()">
+							<option value=""> </option>
+						</select>
+						<span class="span-label"><span class="glyphicon glyphicon-menu-right nm"></span></span>
+
+
+						<select name="" id="" ng-model="recipeNewCtrl.selectedIngredientId">
+							<option ng-repeat="ingredient in recipeNewCtrl.ingredientsFromSelectedCategory" value="{{ingredient.id}}">{{ingredient.name}}</option>
+						</select>
+						<button type="button" class="btn btn_color3" ng-click="recipeNewCtrl.addIngredient()"><span class="glyphicon glyphicon-plus"></span></button>
+
+					</p>
+					<div class="ingredients_list">
+						<ul class="list ac">
+							<li class="item" ng-repeat="ingredient in recipeNewCtrl.recipe.ingredients">
+								<img class="item-img" src="../img/ingredients/{{ingredient.picture}}" alt={{ingredient.name}}>
+								<p class="item-name" title={{ingredient.name}}>{{ingredient.name}}</p>
+								<button type="button" class="remove_ingredient" ng-click="recipeNewCtrl.deleteIngredient(ingredient.id)"><span class="glyphicon glyphicon-remove"></span></button>
+							</li>
+						</ul>
+					</div>
+					<div class="ac">
+						<p class="recette_total_calories">
+							<span class="tit">Valeur calorique <span class="mass">(100g)</span> : </span><span class="val">{{recipeNewCtrl.recipe.calories}}<span class="unit"> kcal</span></span>
+						</p>
+					</div>
+				</div>
+				<div class="col-xs-12">
+					<div class="hr mb2"></div>
+				</div>
+				<div class="col-xs-12 ac">
+					<button type="button" class="btn btn_color3 recette_save" ng-click="recipeNewCtrl.validateRecipe()"><span class="glyphicon glyphicon-ok mr0"></span><span>Valider ma recette</span></button>
+				</div>
+
+				<!-- Afficher au clic sur "valider ma recette" lorsque tout s'est bien déroulé -->
+				<div class="col-xs-12" ng-show="recipeNewCtrl.status == 1">
+					<p class="ac mt2 tb">
+						<span class="glyphicon glyphicon-thumbs-up color3"></span>
+						<span >Votre recette a bien été ajoutée !</span>
+					</p>
+					<p class="ac">
+						<a class="btn btn_color1" href="communaute_details.html"><span class="glyphicon glyphicon-cutlery"></span><span>Mes recettes</span></a>
+					</p>
+				</div>
+
+				<!-- Afficher au clic sur "valider ma recette" si certains éléments sont manquants -->
+				<div class="col-xs-12" ng-show="recipeNewCtrl.status == 2">
+					<p class="ac mt2 tb">
+						<span class="glyphicon glyphicon-exclamation-sign color2"></span>
+						<span >Woops ! Votre recette est super foireuse</span>
+					</p>
+					<p class="ac">Vous avez dû oublier quelque chose...</p>
+				</div>
+			</div>
+		</form>
+	</section>
+</div>

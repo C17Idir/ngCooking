@@ -1,0 +1,11 @@
+<a href="#recettes_details/{{recipe.id}}">
+    <img src={{recipe.picture}} alt={{recipe.name}}>
+    <div class="top" title="note : {{recipe.mark}}/5">
+        <span class="note" ng-repeat="m in user.getEmptyArray( recipe.mark ) track by $index">
+            <span class="glyphicon glyphicon-heart" ></span>
+        </span>
+    </div>
+    <div class="bot">
+        <p class="name">{{recipe.name}}</p>
+    </div>
+</a>

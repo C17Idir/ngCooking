@@ -1,0 +1,29 @@
+﻿<h1 class="page-title">Bienvenue sur NgCooking !</h1>
+<div ng-app="HomeApp" ng-controller="HomeCtrl as HomeCtrl">
+	<section class="section" >
+		<h2 class="title">~ Nos {{HomeCtrl.nbDisplayedBestRecipe}} Meilleures recettes ~</h2>
+		<div class="recettes row"  >
+			<div ng-repeat="recipe in HomeCtrl.recipesListe | orderBy : '-mark' | limitTo:HomeCtrl.nbDisplayedBestRecipe" class="col-xs-6 col-sm-3 recette">
+				<recipe-thumb-nail></recipe-thumb-nail>
+			</div>
+		</div>
+	</section>
+	<section class="section newrecette" ng-show="user.isLogged">
+		<div class="row">
+			<div class="col-xs-12">
+				<p class="c">Vous en avez sous la toque ?!</p>
+				<p class="b">
+					<a href="#recettes_new" class="btn btn_color1"><span class="glyphicon glyphicon-plus-sign"></span><span>Créez une nouvelle recette</span></a>
+				</p>
+			</div>
+		</div>
+	</section>
+	<section class="section">
+		<h2 class="title">~ Nouvelles recettes ~</h2>
+		<div class="recettes row"  >
+			<div ng-repeat="recipe in HomeCtrl.recipesListe | orderBy : 'creationdate' | limitTo:HomeCtrl.nbDisplayedNewRecipe" class="col-xs-6 col-sm-3 recette">
+				<recipe-thumb-nail></recipe-thumb-nail>
+			</div>
+		</div>
+	</section>
+</div>

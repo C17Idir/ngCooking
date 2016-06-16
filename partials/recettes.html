@@ -1,0 +1,85 @@
+<h1 class="page-title">Les recettes</h1>
+<section class="section" ng-app="RecipeApp" ng-controller="RecipeCtrl as recipeCtrl" >
+	<h2 class="title">~ Trouver une recette ~</h2>
+	<div class="panel">
+		<div class="row imgback">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-12 col-sm-9 fp">
+				<div class="filters">
+					<form action="">
+						<div class="filter">
+							<p><label for="">Nom de la recette</label></p>
+							<p><input ng-model="recipeName" type="text" placeholder="ex: Tajine de poulet"></p>
+						</div>
+						<div class="filter">
+							<p><label for="">Ingrédient(s) utlisé(s) pour la recette</label></p>
+							<p><input ng-model="ingredientsListe" type="text" placeholder="ex: poulet;oeuf;farine"></p>
+						</div>
+						<div class="filter">
+							<p><label for="">Valeur calorique de la recette <span class="fwn">(kcal/100g)</span></label></p>
+							<p>
+								<span class="span-label">entre :</span>
+								<input ng-model="caloriesMin" type="number" class="mr0" placeholder="ex: 450">
+								<span class="span-label">et</span>
+								<input ng-model="caloriesMax" type="number" class="mr0" placeholder="ex: 750">
+							</p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sort">
+		<p>
+			<span class="span-label">Trier par :</span>
+			<select ng-model="recipeCtrl.sortOrder" name="" id="">
+				<option value="name">Ordre alphabétique (A->Z)</option>
+				<option value="-name">Ordre alphabétique (Z->A)</option>
+				<option value="-date">Les plus récentes d'abord</option>
+				<option value="date">Les plus anciennes d'abord</option>
+				<option value="-mark">Les mieux notées d'abord</option>
+				<option value="mark">Les moins bien notées d'abord</option>
+				<option value="calories">Du moins calorique au plus calorique</option>
+				<option value="-calories">Du plus calorique au moins calorique</option>
+			</select>
+		</p>
+	</div>
+	<div class="result">
+		<div class="recettes row">
+			<div class="recettes row"  >
+				<div ng-repeat="n in recherche = ( recipeCtrl.recipesListe | matchingRecipes:recipeName:ingredientsListe:caloriesMin:caloriesMax | orderBy : recipeCtrl.sortOrder )" class="col-xs-6 col-sm-3 recette">
+					<a href="recettes_details.html">
+						<img src={{n.picture}} alt={{n.name}}>
+						<div class="top" title="note : {{n.mark}}/5">
+						<span class="note" ng-repeat="m in user.getEmptyArray( n.mark ) track by $index">
+							<span class="glyphicon glyphicon-heart" ></span>
+						</span>
+						</div>
+						<div class="bot">
+							<p class="name">{{n.name}}</p>
+						</div>
+					</a>
+				</div>
+				<p class=" col-xs-12 blank" ng-show="recherche.length == 0 ">Aucune recette ne correspond à votre recherche </p>
+			</div>
+		</div>
+	</div>
+</section>
+<div ng-app="HomeApp" ng-controller="HomeCtrl as HomeCtrl">
+	<section class="section" >
+		<h2 class="title">~ Nos {{HomeCtrl.nbDisplayedBestRecipe}} Meilleures recettes ~</h2>
+		<div class="recettes row"  >
+			<div ng-repeat="recipe in HomeCtrl.recipesListe | orderBy : '-mark' | limitTo:HomeCtrl.nbDisplayedBestRecipe" class="col-xs-6 col-sm-3 recette">
+				<recipe-thumb-nail></recipe-thumb-nail>
+			</div>
+		</div>
+	</section>
+	<section class="section">
+		<h2 class="title">~ Nouvelles recettes ~</h2>
+		<div class="recettes row"  >
+			<div ng-repeat="recipe in HomeCtrl.recipesListe | orderBy : 'creationdate' | limitTo:HomeCtrl.nbDisplayedNewRecipe" class="col-xs-6 col-sm-3 recette">
+				<recipe-thumb-nail></recipe-thumb-nail>
+			</div>
+		</div>
+	</section>
+</div>

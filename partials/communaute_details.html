@@ -1,0 +1,52 @@
+<div class="content" id="content_communaute_details" ng-app="CommunauteDetailsApp" ng-controller="CommunauteDetailsCtrl as communauteDetailsCtrl">
+	<section class="section details">
+		<div class="row">
+			<div class="col-vxs-12 col-xs-6 col-sm-5">
+				<div class="avatar-wrap">
+					<img class="avatar" src={{communauteDetailsCtrl.watchedUser.picture}} alt={{communauteDetailsCtrl.watchedUser.firstname}}>
+				</div>
+			</div>
+			<div class="col-vxs-12 col-xs-6 col-sm-7">
+				<div class="infos">
+					<h1 class="name">{{communauteDetailsCtrl.watchedUser.firstname + " " + communauteDetailsCtrl.watchedUser.surname}}</h1>
+					<p class="level">
+						<span class="stars">
+							<span class="glyphicon glyphicon-star" ng-repeat="m in user.getEmptyArray( communauteDetailsCtrl.watchedUser.mark ) track by $index"></span>
+						</span>
+						<span class="status">{{communauteDetailsCtrl.getRankLabel()}}</span>
+					</p>
+					<p class="city"><span class="fwb">Ville : </span>{{communauteDetailsCtrl.watchedUser.city}}</p>
+					<p class="age"><span class="fwb">Age : </span>35 ans</p>
+					<p class="shared"><span class="fwb">{{communauteDetailsCtrl.watchedUser.firstname}}</span> a partagé <span class="nb">{{communauteDetailsCtrl.watchedUser.recipes.length}} recette{{communauteDetailsCtrl.watchedUser.recipes.length > 1 ? "s":""}}</span></p>
+					<p class="bio"><span class="fwb">BIO : </span>{{communauteDetailsCtrl.watchedUser.bio}}</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Afficher le bloc ci-dessous uniquement si lutilisateur connecté se rend sur sa propre page -->
+	<section class="section newrecette" ng-show="communauteDetailsCtrl.isSelfWatching">
+		<div class="row">
+			<div class="col-xs-12">
+				<p class="c">Vous en avez sous la toque ?!</p>
+				<p class="b">
+					<a href="#recettes_new" class="btn btn_color1"><span class="glyphicon glyphicon-plus-sign"></span><span>Créez une nouvelle recette</span></a>
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<h2 class="title">~ Les recettes de {{communauteDetailsCtrl.watchedUser.firstname}} ~</h2>
+		<div class="recettes row">
+
+			<div ng-repeat="recipe in communauteDetailsCtrl.watchedUser.recipes | limitTo:communauteDetailsCtrl.nbDisplayedRecipes" class="col-xs-6 col-sm-3 recette">
+				<recipe-thumb-nail></recipe-thumb-nail>
+			</div>
+		</div>
+		<div class="row showmore">
+			<div class="col-xs-12">
+				<button type="button" class="btn btn_color1" ng-click="communauteDetailsCtrl.IncNbDisplayedRecipes()"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+			</div>
+		</div>
+	</section>
+</div>

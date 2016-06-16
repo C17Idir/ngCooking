@@ -1,0 +1,34 @@
+[
+	{
+		"id": "soup",
+		"nameToDisplay": "soupe"
+	},
+	{
+		"id": "horsdoeuvre",
+		"nameToDisplay": "Hors d'oeuvre"
+	},
+	{
+		"id": "fishdish",
+		"nameToDisplay": "Poisson"
+	},
+	{
+		"id": "meatdish",
+		"nameToDisplay": "Viande"
+	},
+	{
+		"id": "salad",
+		"nameToDisplay": "Salade"
+	},
+	{
+		"id": "drink",
+		"nameToDisplay": "Boisson"
+	},
+	{
+		"id": "dessert",
+		"nameToDisplay": "Dessert"
+	},
+	{
+		"id": "vegetarian",
+		"nameToDisplay": "Végétarien"
+	}
+]

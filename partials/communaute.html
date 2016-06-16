@@ -1,0 +1,41 @@
+
+<h1 class="page-title" >La communauté</h1>
+
+<section class="section" ng-app="CommunauteApp" ng-controller="CommunauteCtrl as communauteCtrl">
+	<h2 class="title">~ Les meilleures cuistots ~</h2>
+	<div class="sort">
+		<p>
+			<span class="span-label">Trier par :</span>
+			<select name="" id="" ng-model="communauteCtrl.sortOrder" ng-change="communauteCtrl.setOrder()">
+				<option value="firstname">Ordre alphabétique (A->Z) </option>
+				<option value="-firstname">Ordre alphabétique (Z->A)</option>
+				<option value="-mark">Les mieux notés d'abord</option>
+				<option value="mark">Les moins bien notés d'abord</option>
+				<option value="productif">Les plus productifs d'abord</option>
+				<option value="-productif">Les moins productifs d'abord</option>
+			</select>
+		</p>
+	</div>
+	<div class="users row">
+		<div class="col-xs-6 col-sm-3 user"  ng-repeat="n in communauteCtrl.usersList | limitTo:communauteCtrl.nbDisplayedPeople " ng-if="communauteCtrl.isDisplayable(n.id)">
+			<a href="#communaute_details/{{n.id}}">
+				<img src={{n.picture}} alt={{n.firstname}}>
+				<div class="text">
+					<p class="name">{{ n.firstname + " " + n.surname }}</p>
+					<p class="level">
+
+						<span class="stars">
+							<span class="glyphicon glyphicon-star" ng-repeat="m in user.getEmptyArray( n.rank ) track by $index"></span>
+						</span>
+						<span class="status">{{ communauteCtrl.getRankLabel( n.rank ) }}</span>
+					</p>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="row showmore">
+		<div class="col-xs-12">
+			<button type="button" class="btn btn_color1" ng-click="communauteCtrl.IncNbDisplayedPeople()"><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+		</div>
+	</div>
+</section>

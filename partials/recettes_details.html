@@ -1,0 +1,103 @@
+<div class="row" ng-app="RecipeDetailsApp" ng-controller="RecipeDetailsCtrl as recipeDetailsCtrl">
+	<div class="col-xs-12 col-sm-9">
+		<div class="content" id="content_recettes_details">
+			<section class="section">
+				<div class="row">
+					<div class="col-xs-4">
+						<img class="recette_img" src={{recipeDetailsCtrl.recipe.picture}} alt={{recipeDetailsCtrl.recipe.name}}>
+					</div>
+					<div class="col-xs-8">
+						<h1 class="rec_name">{{recipeDetailsCtrl.recipe.name}}</h1>
+						<p class="rec_note">
+							<span class="stars" ng-repeat="m in user.getEmptyArray( recipeDetailsCtrl.recipe.mark ) track by $index">
+								<span class="glyphicon glyphicon-heart" ></span>
+							</span>
+							<span class="notes">| {{ recipeDetailsCtrl.recipe.mark |  number:1 }}/5 - {{ recipeDetailsCtrl.recipe.comments.length ? recipeDetailsCtrl.recipe.comments.length : 0  }} vote{{ recipeDetailsCtrl.recipe.comments.length > 1 ? "s" : ""  }}</span>
+						</p>
+						<div class="ingredients_list">
+							<p class="list-title">Ingrédients</p>
+							<ul class="list" >
+								<li class="item" ng-repeat="m in recipeDetailsCtrl.ingredients">
+									<img class="item-img" src="../img/ingredients/{{m.picture}}" alt="{{m.name}}">
+									<p class="item-name" title="{{m.id}}">{{m.name}}</p>
+								</li>
+							</ul>
+						</div>
+						<p class="rec_cal">Valeur calorique <span class="for">(100g)</span> : <span class="val">{{recipeDetailsCtrl.calories}} kcal</span></p>
+					</div>
+				</div>
+			</section>
+			<section class="section">
+				<div class="row">
+					<div class="col-xs-12">
+						<h2 class="overline-title"><span class="text">Préparation</span></h2>
+					</div>
+					<div class="col-xs-12">
+						<ng-bind-html	ng-bind-html="recipeDetailsCtrl.recipe.preparation"></ng-bind-html>
+					</div>
+				</div>
+			</section>
+			<section class="section">
+				<div class="row">
+					<div class="col-xs-12">
+						<h2 class="overline-title"><span class="text">Commentaires</span></h2>
+					</div>
+					<div class="col-xs-12 col-sm-6" ng-show="user.isLogged">
+						<div class="panel">
+							<div class="filters">
+								<h3 class="panel_title">Donnez-nous votre avis !</h3>
+								<form action="" name="newCommentForm">
+									<div class="filter">
+										<p><label for="" ng-model="newMark" required >Notez cette recette</label></p>
+										<p>
+											<select name="" id="">
+												<option value="5">5</option>
+												<option value="4">4</option>
+												<option value="3">3</option>
+												<option value="2">2</option>
+												<option value="1">1</option>
+											</select>
+										</p>
+									</div>
+									<div class="filter">
+										<p><label for="">Le titre de votre commentaire</label></p>
+										<p><input type="text" placeholder="ex: Amazingue !" ng-model="newTitle" required></p>
+									</div>
+									<div class="filter">
+										<p><label for="">Votre commentaire</label></p>
+										<textarea name="" id="" class="wide" ng-model="newComment" placeholder="ex: Franchement cette NgRecette, c’est de la bombe. Le genre de saveurs qui t’éveillent les papilles, t’as vu ! Woula, j’ai kiffé" required></textarea>
+									</div>
+									<div class="ar">
+										<input type="submit" ng-click="recipeDetailsCtrl.addComment(newCommentForm.$valid   .$valid, user.user.id, newTitle, newComment, newMark)" class="btn btn_color1" value="Poster !">
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12" ng-class="{  'col-sm-6' : user.isLogged }">
+						<ul class="comments" >
+							<li class="comment" ng-repeat="m in recipeDetailsCtrl.recipe.comments | limitTo:recipeDetailsCtrl.nbCommentsDisplayable">
+								<p class="name">{{m.title}}<span class="note">{{m.mark}}/5</span></p>
+								<p class="by">par <a href="/#communaute_details/{{m.userId}}">{{recipeDetailsCtrl.getUserName(m.userId)}}</a></p>
+								<p class="text">{{m.comment}}</p>
+							</li>
+						</ul>
+						<div class="row showmore">
+							<div class="col-xs-12">
+								<button type="button" class="btn btn_grey" ng-click="recipeDetailsCtrl.incrementNbCommentsDisplayable()" ng-show="recipeDetailsCtrl.showMoreButton" ><span class="glyphicon glyphicon-chevron-down"></span>Afficher d'avantage</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="section">
+				<h2 class="title">~ Vous aimerez aussi... ~</h2>
+				<div class="recettes row">
+					<div class="col-xs-6 col-sm-3 recette" ng-repeat="recipe in recipeDetailsCtrl.similarRecipes | limitTo:recipeDetailsCtrl.nbSimilarRecipesDispayable">
+						<recipe-thumb-nail></recipe-thumb-nail>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
+</div>

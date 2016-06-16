@@ -1,0 +1,26 @@
+[
+	{
+		"id": "accueil",
+		"name": "Accueil"
+		"link": "home.html",
+		"class":"page_hom",
+	},
+	{
+		"id": "recettes",
+		"name": "Recettes"
+		"link": "recettes.html",
+		"class":"page_rec",
+	},
+	{
+		"id": "ingredients",
+		"name": "Ingreients"
+		"link": "ingredients.html",
+		"class":"page_ing",
+	},
+	{
+		"id": "communaute",
+		"name": "Communauté"
+		"link": "communaute.html",
+		"class":"page_com",
+	},
+]
